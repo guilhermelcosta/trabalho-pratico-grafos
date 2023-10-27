@@ -30,7 +30,7 @@ public class Vertex {
     }
 
     /**
-     * Imprime a lista de adjacencia de um vertice
+     * Imprime a lista de adjacencia de um vertice: '[v]: adj(0) adj(1) adj(2)...'
      */
     public void printAdj() {
         System.out.printf("[%d]: ", id);

@@ -8,16 +8,30 @@ public class Vertex {
     private int id;
     private List<Integer> adj;
 
+    /**
+     * Construtor padrao de um vertice
+     *
+     * @param id id do vertice
+     */
     public Vertex(int id) {
         this.id = id;
         this.adj = new ArrayList<>();
     }
 
+    /**
+     * Construtor com lista de adjacencia de um vertice
+     *
+     * @param id  id do vertice
+     * @param adj lista de adjacencia
+     */
     public Vertex(int id, List<Integer> adj) {
         this.id = id;
         this.adj = adj;
     }
 
+    /**
+     * Imprime a lista de adjacencia de um vertice
+     */
     public void printAdj() {
         System.out.printf("[%d]: ", id);
         adj.forEach(integer -> System.out.print(integer + " "));

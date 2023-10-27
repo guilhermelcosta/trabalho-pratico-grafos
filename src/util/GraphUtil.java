@@ -10,6 +10,12 @@ import java.util.List;
 
 public class GraphUtil {
 
+    /**
+     * Armazena as informacoes de um grafo em um arquivo .txt
+     *
+     * @param graph grafo a ser armazenado
+     * @throws IOException lanca excecao caso o caminho para armazenar o grafo nao seja encontrado
+     */
     public static void saveAsTxt(Graph graph) throws IOException {
         try {
             PrintWriter printWriter = new PrintWriter("src/graphs/graph-" + graph.getType().toLowerCase() + "-" + graph.getVertices().size() + ".txt");

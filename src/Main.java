@@ -5,6 +5,12 @@ import util.GraphUtil;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        /*
+         * Parametros para gerar de grafos:
+         * grafos eulerianos, semi-eulerianos ou nao-eulerianos
+         * numero de vertices como 100, 1.000, 10.000 ou 100.000
+         */
+
         Graph graph = GraphGenerator.semiEulerian(100);
         GraphUtil.saveAsTxt(graph);
 

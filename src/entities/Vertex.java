@@ -18,6 +18,11 @@ public class Vertex {
         this.adj = adj;
     }
 
+    public void printAdj() {
+        System.out.printf("[%d]: ", id);
+        adj.forEach(integer -> System.out.print(integer + " "));
+    }
+
     public int getId() {
         return id;
     }

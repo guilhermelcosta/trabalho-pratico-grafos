@@ -18,7 +18,6 @@ public class GraphGenerator {
 
         Graph graph = new Graph();
         Vertex[] vertices = new Vertex[v];
-
 //        Criar os vertices do grafo.
         for (int i = 0; i < v; i++)
             vertices[i] = new Vertex(i + 1);
@@ -42,7 +41,6 @@ public class GraphGenerator {
     public static Graph semiEulerian(int v) {
 
         Graph graph = GraphGenerator.eulerian(v);
-
 //        Caso o grafo possua mais de 3 vertices, insere uma nova aresta, de modo que 2 vertices
 //        tenham grau impar. Caso possua 3 vertices, remove uma aresta.
         if (v > 3) {

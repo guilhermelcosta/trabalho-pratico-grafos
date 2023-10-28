@@ -11,8 +11,9 @@ public class Main {
          * numero de vertices como 100, 1.000, 10.000 ou 100.000
          */
 
-        Graph graph = GraphGenerator.semiEulerian(100);
+        Graph graph = GraphGenerator.semiEulerian(10);
         GraphUtil.saveAsTxt(graph);
+        System.out.println(GraphUtil.isConnected(graph));
 
     }
 }

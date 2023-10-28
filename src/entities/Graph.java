@@ -87,4 +87,5 @@ public class Graph {
     public void setType(String type) {
         this.type = type;
     }
+
 }

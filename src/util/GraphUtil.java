@@ -2,11 +2,11 @@ package util;
 
 import entities.Edge;
 import entities.Graph;
+import entities.Vertex;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class GraphUtil {
 
@@ -28,6 +28,50 @@ public class GraphUtil {
         } catch (IOException e) {
             throw new IOException("Erro ao salvar o arquivo.");
         }
+    }
+
+    /**
+     * Realiza busca em largura no grafo
+     *
+     * @param graph grafo de referencia
+     * @return booleano indicando se o grafo e ou nao conexo
+     */
+    public static boolean isConnected(Graph graph) {
+
+        List<Vertex> vertices = new ArrayList<>(graph.getVertices());
+        List<Edge> edges = new ArrayList<>(graph.getEdges());
+
+        for (int i = 0; i < vertices.size(); i++) {
+            Set<Vertex> visited = new HashSet<>();
+            Queue<Vertex> queue = new LinkedList<>();
+            Vertex startVertex = vertices.get(i);
+
+            queue.offer(startVertex);
+            visited.add(startVertex);
+
+            while (!queue.isEmpty()) {
+                Vertex currentVertex = queue.poll();
+                /*todo: otimizar esse codigo, sem que ele itere sobre todas as arestas
+                 * pode criar um especie de apontador, ou quebrar o loop quando o id de .getV() for maior que o currentVertex.getId()
+                 */
+                for (Edge edge : edges) {
+                    if (edge.getV().getId() > currentVertex.getId())
+                        break;
+
+                    if (edge.getV().equals(currentVertex)) {
+                        Vertex neighbor = edge.getW();
+
+                        if (!visited.contains(neighbor)) {
+                            visited.add(neighbor);
+                            queue.offer(neighbor);
+                        }
+                    }
+                }
+            }
+            if (visited.size() == vertices.size())
+                return true;
+        }
+        return false;
     }
 
 }

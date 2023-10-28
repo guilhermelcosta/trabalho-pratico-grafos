@@ -6,6 +6,7 @@ import java.util.List;
 public class Vertex {
 
     private int id;
+    private int degree;
     private List<Integer> adj;
 
     /**
@@ -16,6 +17,7 @@ public class Vertex {
     public Vertex(int id) {
         this.id = id;
         this.adj = new ArrayList<>();
+        this.degree = 0;
     }
 
     /**
@@ -27,6 +29,7 @@ public class Vertex {
     public Vertex(int id, List<Integer> adj) {
         this.id = id;
         this.adj = adj;
+        this.degree = adj.size();
     }
 
     /**
@@ -55,9 +58,19 @@ public class Vertex {
 
     public void addAdj(Integer vertexId) {
         adj.add(vertexId);
+        this.degree++;
     }
 
     public void removeAdj(Integer vertexId) {
         adj.remove(vertexId);
+        this.degree--;
+    }
+
+    public int getDegree() {
+        return degree;
+    }
+
+    public void setDegree(int degree) {
+        this.degree = degree;
     }
 }

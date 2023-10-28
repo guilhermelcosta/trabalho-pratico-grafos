@@ -7,7 +7,8 @@ public class Vertex {
 
     private int id;
     private int degree;
-    private List<Integer> adj;
+    private List<Integer> adjVertices;
+    private List<Edge> adjEdges;
 
     /**
      * Construtor padrao de um vertice
@@ -16,28 +17,35 @@ public class Vertex {
      */
     public Vertex(int id) {
         this.id = id;
-        this.adj = new ArrayList<>();
         this.degree = 0;
+        this.adjVertices = new ArrayList<>();
+        this.adjEdges = new ArrayList<>();
     }
 
     /**
-     * Construtor com lista de adjacencia de um vertice
-     *
-     * @param id  id do vertice
-     * @param adj lista de adjacencia
+     * Construtor vazio do vertice
      */
-    public Vertex(int id, List<Integer> adj) {
-        this.id = id;
-        this.adj = adj;
-        this.degree = adj.size();
+    public Vertex() {
+        this.id = Integer.MAX_VALUE;
+        this.degree = 0;
+        this.adjVertices = new ArrayList<>();
+        this.adjEdges = new ArrayList<>();
     }
 
     /**
      * Imprime a lista de adjacencia de um vertice: '[v]: adj(0) adj(1) adj(2)...'
      */
-    public void printAdj() {
+    public void printAdjVertices() {
         System.out.printf("[%d]: ", id);
-        adj.forEach(integer -> System.out.print(integer + " "));
+        adjVertices.forEach(integer -> System.out.print(integer + " "));
+    }
+
+    /**
+     * Imprime a lista de adjacencia de um vertice: [v] - [w]
+     */
+    public void printAdjEdges() {
+        System.out.printf("[%d]: ", id);
+        adjEdges.forEach(Edge::print);
     }
 
     public int getId() {
@@ -48,22 +56,22 @@ public class Vertex {
         this.id = id;
     }
 
-    public List<Integer> getAdj() {
-        return adj;
+    public List<Integer> getAdjVertices() {
+        return adjVertices;
     }
 
-    public void setAdj(List<Integer> adj) {
-        this.adj = adj;
+    public void setAdjVertices(List<Integer> adjVertices) {
+        this.adjVertices = adjVertices;
     }
 
-    public void addAdj(Integer vertexId) {
-        adj.add(vertexId);
-        this.degree++;
+    private void addAdjVertice(Integer vertexId) throws Exception {
+        this.adjVertices.add(vertexId);
+        updateDegree();
     }
 
-    public void removeAdj(Integer vertexId) {
-        adj.remove(vertexId);
-        this.degree--;
+    private void removeAdjVertice(Integer vertexId) throws Exception {
+        this.adjVertices.remove(vertexId);
+        updateDegree();
     }
 
     public int getDegree() {
@@ -72,5 +80,36 @@ public class Vertex {
 
     public void setDegree(int degree) {
         this.degree = degree;
+    }
+
+    public List<Edge> getAdjEdges() {
+        return adjEdges;
+    }
+
+    public void setAdjEdges(List<Edge> adjEdges) {
+        this.adjEdges = adjEdges;
+    }
+
+    public void addAdjEdge(Edge edge) throws Exception {
+        this.adjEdges.add(edge);
+        Integer vertexId = edge.getW().getId() == this.id ? edge.getV().getId() : edge.getW().getId();
+        addAdjVertice(vertexId);
+        updateDegree();
+    }
+
+    public void removeAdjEdge(Edge edge) throws Exception {
+        this.adjEdges.remove(edge);
+        Integer vertexId = edge.getW().getId() == this.id ? edge.getV().getId() : edge.getW().getId();
+        removeAdjVertice(vertexId);
+        updateDegree();
+    }
+
+    private void updateDegree() throws Exception {
+        try {
+            if (this.adjVertices.size() == this.adjEdges.size())
+                this.degree = this.adjVertices.size();
+        } catch (Exception e) {
+            throw new Exception("Erro na atualizacao do grau do vertice");
+        }
     }
 }

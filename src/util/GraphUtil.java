@@ -74,4 +74,41 @@ public class GraphUtil {
         return false;
     }
 
+    /*todo: metodo ainda nao finalizado*/
+    public static boolean fleuryNaive(Graph graph) throws Exception {
+
+        int verticesWithOddDegree = (int) graph.getVertices().stream()
+                .filter(vertex -> vertex.getDegree() % 2 != 0)
+                .count();
+
+        if (verticesWithOddDegree > 3) {
+            System.out.println("Numero de vertices com grau impar e maior do que 3 -> Nao existe caminho euleriano");
+            return false;
+        }
+
+
+        Graph graphAux = graph.copy();
+        Vertex v = graphAux.getVertices().get(0);
+
+        for (Vertex vertex : graphAux.getVertices()) {
+            if (vertex.getDegree() % 2 != 0)
+                v = vertex;
+        }
+
+        while (!graphAux.getEdges().isEmpty()) {
+            if (v.getDegree() > 1) {
+                for (Edge edge : v.getAdjEdges()) {
+                    graphAux.removeEdge(edge);
+
+//                    Continuar a partir daqui
+                    if (GraphUtil.isConnected(graphAux))
+                        System.out.println("Ainda e conexo");
+                }
+            }
+        }
+
+
+        return true;
+    }
+
 }

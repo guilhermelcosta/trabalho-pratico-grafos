@@ -32,6 +32,18 @@ public class Graph {
     }
 
     /**
+     * Construtor padrao do grafo com tipo
+     *
+     * @param vertices lista de vertices
+     * @param edges    lista de arestas
+     */
+    public Graph(List<Vertex> vertices, List<Edge> edges, String type) {
+        this.vertices = vertices;
+        this.edges = edges;
+        this.type = type;
+    }
+
+    /**
      * Imprime as arestas do grafo: [v] - [w]
      */
     public void print() {
@@ -39,29 +51,30 @@ public class Graph {
         edges.forEach(Edge::print);
     }
 
+    public Graph copy () {
+        return new Graph(this.vertices, this.edges, this.type);
+    }
+
     /**
      * Adiciona uma nova aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados
      *
      * @param edge nova aresta
      */
-    public void addEdge(Edge edge) {
-        edge.getV().addAdj(edge.getW().getId());
-        edge.getW().addAdj(edge.getV().getId());
+    public void addEdge(Edge edge) throws Exception {
+        edge.getV().addAdjEdge(edge);
+        edge.getW().addAdjEdge(edge);
         this.edges.add(edge);
     }
 
     /**
      * Remove uma aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados
      *
-     * @param pos posicao da aresta na lista de arestas do grafo
+     * @param edge aresta removida
      */
-    public void removeEdge(int pos) {
-        Edge edgeToRemove = edges.get(pos);
-        Vertex v = edgeToRemove.getV();
-        Vertex w = edgeToRemove.getW();
-        v.removeAdj(w.getId());
-        w.removeAdj(v.getId());
-        edges.remove(pos);
+    public void removeEdge(Edge edge) throws Exception {
+        edge.getV().removeAdjEdge(edge);
+        edge.getW().removeAdjEdge(edge);
+        edges.remove(edge);
     }
 
     public List<Vertex> getVertices() {

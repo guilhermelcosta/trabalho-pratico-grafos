@@ -11,9 +11,9 @@ public class Main {
          * numero de vertices como 100, 1.000, 10.000 ou 100.000
          */
 
-        Graph graph = GraphGenerator.eulerian(10);
+        Graph graph = GraphGenerator.nonEulerian(10);
 //        GraphUtil.saveAsTxt(graph);
-        GraphUtil.fleuryNaive(graph);
+        System.out.println(GraphUtil.fleuryNaive(graph));
 //        System.out.println(GraphUtil.isConnected(graph));
 
     }

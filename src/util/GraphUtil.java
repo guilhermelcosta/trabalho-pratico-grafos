@@ -86,29 +86,38 @@ public class GraphUtil {
             return false;
         }
 
-
-        Graph graphAux = graph.copy();
+        List<Integer> visited = new ArrayList<>();
+        Graph graphAux = Graph.copy(graph);
         Vertex v = graphAux.getVertices().get(0);
 
         for (Vertex vertex : graphAux.getVertices()) {
-            if (vertex.getDegree() % 2 != 0)
+            if (vertex.getDegree() % 2 != 0) {
                 v = vertex;
+                break;
+            }
         }
-
+        visited.add(v.getId());
+        /*todo: corrigir problema para grafo semi euleriano*/
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
                 for (Edge edge : v.getAdjEdges()) {
                     graphAux.removeEdge(edge);
-
 //                    Continuar a partir daqui
-                    if (GraphUtil.isConnected(graphAux))
-                        System.out.println("Ainda e conexo");
+                    if (GraphUtil.isConnected(graphAux)) {
+                        v = edge.getW();
+                        visited.add(v.getId());
+                        break;
+                    } else
+                        graphAux.addEdge(edge);
                 }
+            } else {
+                v = graphAux.getEdges().get(0).getW();
+                visited.add(v.getId());
+                graphAux.removeEdge(graphAux.getEdges().get(0));
             }
         }
-
-
-        return true;
+//        System.out.println(Arrays.toString(visited.toArray()));
+        return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
     }
 
 }

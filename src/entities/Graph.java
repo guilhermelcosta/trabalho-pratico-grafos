@@ -43,16 +43,16 @@ public class Graph {
         this.type = type;
     }
 
+    public static Graph copy(Graph graph) {
+        return new Graph(new ArrayList<>(graph.getVertices()), new ArrayList<>(graph.getEdges()), graph.getType());
+    }
+
     /**
      * Imprime as arestas do grafo: [v] - [w]
      */
     public void print() {
         edges.sort(Comparator.comparingInt(edge -> edge.getV().getId()));
         edges.forEach(Edge::print);
-    }
-
-    public Graph copy () {
-        return new Graph(this.vertices, this.edges, this.type);
     }
 
     /**

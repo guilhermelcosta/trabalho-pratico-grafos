@@ -17,6 +17,17 @@ public class Edge {
     }
 
     /**
+     * Retorna o outro vertice da aresta.
+     * Se a aresta 'edge' possui os vertices (V,W), o metodo edge.other(V), retorna W, e vice-versa
+     *
+     * @param vertex vertice de referencia.
+     * @return retorna o outro vertice da aresta.
+     */
+    public Vertex other(Vertex vertex) {
+        return vertex.getId() == this.getV().getId() ? this.getW() : this.getV();
+    }
+
+    /**
      * Imprime as informacoes da aresta: [v] - [w].
      */
     public void print() {

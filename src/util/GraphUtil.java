@@ -38,8 +38,9 @@ public class GraphUtil {
      */
     public static boolean isConnected(Graph graph) {
 
-        List<Vertex> vertices = new ArrayList<>(graph.getVertices());
-        List<Edge> edges = new ArrayList<>(graph.getEdges());
+        List<Vertex> vertices = graph.getVertices().stream()
+                .filter(vertex -> vertex.getDegree() > 0)
+                .toList();
 
         for (int i = 0; i < vertices.size(); i++) {
             Set<Vertex> visited = new HashSet<>();
@@ -51,20 +52,13 @@ public class GraphUtil {
 
             while (!queue.isEmpty()) {
                 Vertex currentVertex = queue.poll();
-                /*todo: otimizar esse codigo, sem que ele itere sobre todas as arestas
-                 * pode criar um especie de apontador, ou quebrar o loop quando o id de .getV() for maior que o currentVertex.getId().
-                 */
-                for (Edge edge : edges) {
-                    if (edge.getV().getId() > currentVertex.getId())
-                        break;
 
-                    if (edge.getV().equals(currentVertex)) {
-                        Vertex neighbor = edge.getW();
+                for (Edge edge : currentVertex.getAdjEdges()) {
+                    Vertex neighbor = edge.other(currentVertex);
 
-                        if (!visited.contains(neighbor)) {
-                            visited.add(neighbor);
-                            queue.offer(neighbor);
-                        }
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.offer(neighbor);
                     }
                 }
             }
@@ -105,7 +99,9 @@ public class GraphUtil {
         visited.add(v.getId());
 
         while (!graphAux.getEdges().isEmpty()) {
+
             if (v.getDegree() > 1) {
+                /*todo: .removeEdge() esta removendo os adjacentes no vertex*/
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
                     graphTemp.removeEdge(edge);
@@ -113,7 +109,7 @@ public class GraphUtil {
 //                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
                     if (GraphUtil.isConnected(graphTemp)) {
                         graphAux.removeEdge(edge);
-                        v = getNextVertex(v, edge);
+                        v = edge.other(v);
                         visited.add(v.getId());
                         break;
                     }
@@ -121,25 +117,13 @@ public class GraphUtil {
             } else {
 //                Caso o vertice analisado nao tenha nenhuma aresta, que nao uma ponte,
 //                entao e removida a aresta de ponte.
-                v = getNextVertex(v, graphAux.getEdges().get(0));
+                Edge edge = v.getAdjEdges().get(0);
+                v = edge.other(v);
                 visited.add(v.getId());
-                graphAux.removeEdge(graphAux.getEdges().get(0));
+                graphAux.removeEdge(edge);
             }
         }
         System.out.println(Arrays.toString(visited.toArray()));
         return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
-    }
-
-    /**
-     * Retorna o proximo vertice a ser explorado. Como o grafo nao e direcionado, quando uma aresta e analisada,
-     * deve-se verificar em qual vertice da arestas estamos, e ir no outro.
-     * Por exemplo: aresta(3 - 5), se estamos explorando o 3, o proximo vertice deve ser o 5, e vice-versa.
-     *
-     * @param v vertice atual.
-     * @param e aresta analisada.
-     * @return proximo vertice a ser explorado.
-     */
-    private static Vertex getNextVertex(Vertex v, Edge e) {
-        return v == e.getW() ? e.getV() : e.getW();
     }
 }

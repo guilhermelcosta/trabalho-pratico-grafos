@@ -6,9 +6,10 @@ public class Edge {
     private Vertex w;
 
     /**
-     * Construtor padrao de uma aresta
-     * @param v aresta V
-     * @param w aresta W
+     * Construtor padrao de uma aresta.
+     *
+     * @param v aresta V.
+     * @param w aresta W.
      */
     public Edge(Vertex v, Vertex w) {
         this.v = v;
@@ -16,7 +17,7 @@ public class Edge {
     }
 
     /**
-     * Imprime as informacoes da aresta: [v] - [w]
+     * Imprime as informacoes da aresta: [v] - [w].
      */
     public void print() {
         System.out.println(v.getId() + " - " + w.getId());

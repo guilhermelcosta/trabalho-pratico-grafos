@@ -11,10 +11,10 @@ import java.util.*;
 public class GraphUtil {
 
     /**
-     * Armazena as informacoes de um grafo em um arquivo .txt
+     * Armazena as informacoes de um grafo em um arquivo .txt.
      *
-     * @param graph grafo a ser armazenado
-     * @throws IOException lanca excecao caso o caminho para armazenar o grafo nao seja encontrado
+     * @param graph grafo a ser armazenado.
+     * @throws IOException lanca excecao caso o caminho para armazenar o grafo nao seja encontrado.
      */
     public static void saveAsTxt(Graph graph) throws IOException {
         try {
@@ -31,10 +31,10 @@ public class GraphUtil {
     }
 
     /**
-     * Realiza busca em largura no grafo
+     * Realiza busca em largura no grafo.
      *
-     * @param graph grafo de referencia
-     * @return booleano indicando se o grafo e ou nao conexo
+     * @param graph grafo de referencia.
+     * @return booleano indicando se o grafo e ou nao conexo.
      */
     public static boolean isConnected(Graph graph) {
 
@@ -52,7 +52,7 @@ public class GraphUtil {
             while (!queue.isEmpty()) {
                 Vertex currentVertex = queue.poll();
                 /*todo: otimizar esse codigo, sem que ele itere sobre todas as arestas
-                 * pode criar um especie de apontador, ou quebrar o loop quando o id de .getV() for maior que o currentVertex.getId()
+                 * pode criar um especie de apontador, ou quebrar o loop quando o id de .getV() for maior que o currentVertex.getId().
                  */
                 for (Edge edge : edges) {
                     if (edge.getV().getId() > currentVertex.getId())
@@ -74,7 +74,14 @@ public class GraphUtil {
         return false;
     }
 
-    /*todo: metodo ainda nao finalizado*/
+    /**
+     * Implementacao do metodo de Fleury utilizando abordagem naive para identificacao de pontes.
+     * O metodo de Fleury foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
+     *
+     * @param graph grafo de referencia.
+     * @return booleano indicando se existe ou nao um ciclo euleriano.
+     * @throws Exception lanca excecao caso nao seja possivel remover corretamente a aresta do grafo.
+     */
     public static boolean fleuryNaive(Graph graph) throws Exception {
 
         int verticesWithOddDegree = (int) graph.getVertices().stream()
@@ -85,7 +92,6 @@ public class GraphUtil {
             System.out.println("Numero de vertices com grau impar e maior do que 3 -> Nao existe caminho euleriano");
             return false;
         }
-
         List<Integer> visited = new ArrayList<>();
         Graph graphAux = Graph.copy(graph);
         Vertex v = graphAux.getVertices().get(0);
@@ -97,27 +103,43 @@ public class GraphUtil {
             }
         }
         visited.add(v.getId());
-        /*todo: corrigir problema para grafo semi euleriano*/
+
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
                 for (Edge edge : v.getAdjEdges()) {
-                    graphAux.removeEdge(edge);
-//                    Continuar a partir daqui
-                    if (GraphUtil.isConnected(graphAux)) {
-                        v = edge.getW();
+                    Graph graphTemp = Graph.copy(graphAux);
+                    graphTemp.removeEdge(edge);
+//                    Verificacao se aresta removida e ou nao uma ponte, caso o grafo, apos a remocao da aresta
+//                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
+                    if (GraphUtil.isConnected(graphTemp)) {
+                        graphAux.removeEdge(edge);
+                        v = getNextVertex(v, edge);
                         visited.add(v.getId());
                         break;
-                    } else
-                        graphAux.addEdge(edge);
+                    }
                 }
             } else {
-                v = graphAux.getEdges().get(0).getW();
+//                Caso o vertice analisado nao tenha nenhuma aresta, que nao uma ponte,
+//                entao e removida a aresta de ponte.
+                v = getNextVertex(v, graphAux.getEdges().get(0));
                 visited.add(v.getId());
                 graphAux.removeEdge(graphAux.getEdges().get(0));
             }
         }
-//        System.out.println(Arrays.toString(visited.toArray()));
+        System.out.println(Arrays.toString(visited.toArray()));
         return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
     }
 
+    /**
+     * Retorna o proximo vertice a ser explorado. Como o grafo nao e direcionado, quando uma aresta e analisada,
+     * deve-se verificar em qual vertice da arestas estamos, e ir no outro.
+     * Por exemplo: aresta(3 - 5), se estamos explorando o 3, o proximo vertice deve ser o 5, e vice-versa.
+     *
+     * @param v vertice atual.
+     * @param e aresta analisada.
+     * @return proximo vertice a ser explorado.
+     */
+    private static Vertex getNextVertex(Vertex v, Edge e) {
+        return v == e.getW() ? e.getV() : e.getW();
+    }
 }

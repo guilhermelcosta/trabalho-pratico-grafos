@@ -6,26 +6,26 @@ import java.util.List;
 public class GraphGenerator {
 
     /**
-     * Constroi um grafo euleriano com 'v' vertices.
+     * Constroi um grafo euleriano com 'n' vertices.
      *
-     * @param v numero de vertices.
+     * @param n numero de vertices.
      * @return grafo euleriano.
      */
-    public static Graph eulerian(int v) throws Exception {
+    public static Graph eulerian(int n) throws Exception {
 
-        if (v < 3)
+        if (n < 3)
             throw new IllegalArgumentException("O grafo deve possuir no minimo tres vertices");
 
         Graph graph = new Graph();
-        Vertex[] vertices = new Vertex[v];
+        Vertex[] vertices = new Vertex[n];
 //        Criar os vertices do grafo.
-        for (int i = 0; i < v; i++)
+        for (int i = 0; i < n; i++)
             vertices[i] = new Vertex(i + 1);
 //        Atribui os vertices a suas arestas.
-        for (int i = 0; i < v - 1; i++)
+        for (int i = 0; i < n - 1; i++)
             graph.addEdge(new Edge(vertices[i], vertices[i + 1]));
 
-        graph.addEdge(new Edge(vertices[v - 1], vertices[0]));
+        graph.addEdge(new Edge(vertices[n - 1], vertices[0]));
         graph.setVertices(Arrays.asList(vertices));
         graph.setType("Eulerian");
 
@@ -33,17 +33,17 @@ public class GraphGenerator {
     }
 
     /**
-     * Constroi um grafo semi-euleriano com 'v' vertices.
+     * Constroi um grafo semi-euleriano com 'n' vertices.
      *
-     * @param v numero de vertices.
+     * @param n numero de vertices.
      * @return grafo semi-euleriano.
      */
-    public static Graph semiEulerian(int v) throws Exception {
+    public static Graph semiEulerian(int n) throws Exception {
 
-        Graph graph = GraphGenerator.eulerian(v);
+        Graph graph = GraphGenerator.eulerian(n);
 //        Caso o grafo possua mais de 3 vertices, insere uma nova aresta, de modo que 2 vertices
 //        tenham grau impar. Caso possua 3 vertices, remove uma aresta.
-        if (v > 3) {
+        if (n > 3) {
             List<Vertex> vertices = graph.getVertices();
             Vertex midVertex = vertices.get(graph.getVertices().size() / 2);
             Vertex firstVertex = vertices.get(0);
@@ -58,17 +58,17 @@ public class GraphGenerator {
     }
 
     /**
-     * Constroi um grafo nao-euleriano com 'v' vertices.
+     * Constroi um grafo nao-euleriano com 'n' vertices.
      *
-     * @param v numero de vertices.
+     * @param n numero de vertices.
      * @return grafo nao-euleriano.
      */
-    public static Graph nonEulerian(int v) throws Exception {
+    public static Graph nonEulerian(int n) throws Exception {
 
-        if (v < 4)
+        if (n < 4)
             throw new IllegalArgumentException("O grafo nao-euleriano deve possuir no minimo quatro vertices");
 
-        Graph graph = GraphGenerator.semiEulerian(v);
+        Graph graph = GraphGenerator.semiEulerian(n);
         List<Vertex> vertices = graph.getVertices();
         Vertex midVertex = vertices.get((graph.getVertices().size() / 2) - 1);
         Vertex lastVertex = vertices.get(vertices.size() - 1);

@@ -107,7 +107,7 @@ public class GraphUtil {
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
                     graphTemp.removeEdge(edge);
-//                    Verifica se aresta removida e ou nao uma ponte. Caso o grafo, apos a remocao da aresta,
+//                    Verifica se aresta removida e ou nao uma ponte pelo metodo naive. Caso o grafo, apos a remocao da aresta,
 //                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
                     if (GraphUtil.isConnected(graphTemp)) {
                         graphAux.removeEdge(edge);

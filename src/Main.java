@@ -13,9 +13,16 @@ public class Main {
 
         Graph graph = GraphGenerator.semiEulerian(100000);
         long start = System.currentTimeMillis();
-        GraphUtil.fleuryNaive(graph);
+        boolean hasEulerianCycle = GraphUtil.fleuryNaive(graph, false);
         long end = System.currentTimeMillis();
         long elapsedTime = end - start;
+
+        if (!graph.getType().equals("Non-Eulerian")) {
+            if (hasEulerianCycle)
+                System.out.println("Existe ciclo euleriano");
+            else
+                System.out.println("Existe trajeto euleriano");
+        }
         System.out.println("Tempo de execucao: " + (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"));
 
     }

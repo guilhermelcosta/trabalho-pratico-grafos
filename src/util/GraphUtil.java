@@ -79,7 +79,7 @@ public class GraphUtil {
      * @return booleano indicando se existe ou nao um ciclo euleriano.
      * @throws Exception lanca excecao caso nao seja possivel remover corretamente a aresta do grafo.
      */
-    public static boolean fleuryNaive(Graph graph) throws Exception {
+    public static boolean fleuryNaive(Graph graph, boolean showPath) throws Exception {
 
         int verticesWithOddDegree = (int) graph.getVertices().stream()
                 .filter(vertex -> vertex.getDegree() % 2 != 0)
@@ -102,13 +102,12 @@ public class GraphUtil {
         visited.add(v.getId());
 
         while (!graphAux.getEdges().isEmpty()) {
-
             if (v.getDegree() > 1) {
-//                todo: .removeEdge() esta removendo os adjacentes no vertex
+                /*todo: corrigir .removeEdge() em graphTemp removendo os vertices adjacentes no vertex*/
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
                     graphTemp.removeEdge(edge);
-//                    Verificacao se aresta removida e ou nao uma ponte, caso o grafo, apos a remocao da aresta
+//                    Verifica se aresta removida e ou nao uma ponte. Caso o grafo, apos a remocao da aresta,
 //                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
                     if (GraphUtil.isConnected(graphTemp)) {
                         graphAux.removeEdge(edge);
@@ -126,7 +125,8 @@ public class GraphUtil {
                 graphAux.removeEdge(edge);
             }
         }
-        System.out.println(Arrays.toString(visited.toArray()));
+        if (showPath)
+            System.out.println(Arrays.toString(visited.toArray()));
         return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
     }
 }

@@ -78,7 +78,7 @@ public class Vertex {
      */
     public void addAdjEdge(Edge edge) throws Exception {
         this.adjEdges.add(edge);
-        Integer vertexId = edge.getW().getId() == this.id ? edge.getV().getId() : edge.getW().getId();
+        Integer vertexId = edge.other(this).getId();
         addAdjVertice(vertexId);
         updateDegree();
     }
@@ -91,7 +91,7 @@ public class Vertex {
      */
     public void removeAdjEdge(Edge edge) throws Exception {
         this.adjEdges.remove(edge);
-        Integer vertexId = edge.getW().getId() == this.id ? edge.getV().getId() : edge.getW().getId();
+        Integer vertexId = edge.other(this).getId();
         removeAdjVertice(vertexId);
         updateDegree();
     }

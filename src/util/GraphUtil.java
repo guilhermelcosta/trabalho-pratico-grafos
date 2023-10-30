@@ -38,6 +38,9 @@ public class GraphUtil {
      */
     public static boolean isConnected(Graph graph) {
 
+        /*todo: esse trecho talvez possa ser melhorado e, em vez de fazer essa verificacao aqui,
+           fazer ela antes de chamar esse metodo. Por que dessa forma, essa busca nao seria eficaz em situacoes
+            mais 'genericas'. Ela fica restrita apenas a aplicacao pro metodo de Fleury.*/
         List<Vertex> vertices = graph.getVertices().stream()
                 .filter(vertex -> vertex.getDegree() > 0)
                 .toList();
@@ -101,7 +104,7 @@ public class GraphUtil {
         while (!graphAux.getEdges().isEmpty()) {
 
             if (v.getDegree() > 1) {
-                /*todo: .removeEdge() esta removendo os adjacentes no vertex*/
+//                todo: .removeEdge() esta removendo os adjacentes no vertex
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
                     graphTemp.removeEdge(edge);

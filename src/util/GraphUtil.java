@@ -93,6 +93,7 @@ public class GraphUtil {
         Graph graphAux = Graph.copy(graph);
         Vertex v = graphAux.getVertices().get(0);
 
+//        Seleciona vertice inicial com grau impar, se tiver. Caso contrario, inicia do primeiro vertice
         for (Vertex vertex : graphAux.getVertices()) {
             if (vertex.getDegree() % 2 != 0) {
                 v = vertex;

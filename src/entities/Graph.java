@@ -11,10 +11,22 @@ public class Graph {
     private String type;
 
     /**
-     * Construtor padrao do grafo
+     * Construtor padrao do grafo com tipo.
      *
-     * @param vertices lista de vertices
-     * @param edges    lista de arestas
+     * @param vertices lista de vertices.
+     * @param edges    lista de arestas.
+     */
+    public Graph(List<Vertex> vertices, List<Edge> edges, String type) {
+        this.vertices = vertices;
+        this.edges = edges;
+        this.type = type;
+    }
+
+    /**
+     * Construtor padrao do grafo.
+     *
+     * @param vertices lista de vertices.
+     * @param edges    lista de arestas.
      */
     public Graph(List<Vertex> vertices, List<Edge> edges) {
         this.vertices = vertices;
@@ -23,7 +35,7 @@ public class Graph {
     }
 
     /**
-     * Construtor vazio do grafo
+     * Construtor vazio do grafo.
      */
     public Graph() {
         this.vertices = new ArrayList<>();
@@ -32,23 +44,17 @@ public class Graph {
     }
 
     /**
-     * Construtor padrao do grafo com tipo
+     * Copia as informacoes do grafo atual para um novo grafo.
      *
-     * @param vertices lista de vertices
-     * @param edges    lista de arestas
+     * @param graph grafo de referencia.
+     * @return novo grafo.
      */
-    public Graph(List<Vertex> vertices, List<Edge> edges, String type) {
-        this.vertices = vertices;
-        this.edges = edges;
-        this.type = type;
-    }
-
     public static Graph copy(Graph graph) {
         return new Graph(new ArrayList<>(graph.getVertices()), new ArrayList<>(graph.getEdges()), graph.getType());
     }
 
     /**
-     * Imprime as arestas do grafo: [v] - [w]
+     * Imprime as arestas do grafo: [v] - [w].
      */
     public void print() {
         edges.sort(Comparator.comparingInt(edge -> edge.getV().getId()));
@@ -56,9 +62,9 @@ public class Graph {
     }
 
     /**
-     * Adiciona uma nova aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados
+     * Adiciona uma nova aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados.
      *
-     * @param edge nova aresta
+     * @param edge nova aresta.
      */
     public void addEdge(Edge edge) throws Exception {
         edge.getV().addAdjEdge(edge);
@@ -67,9 +73,9 @@ public class Graph {
     }
 
     /**
-     * Remove uma aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados
+     * Remove uma aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados.
      *
-     * @param edge aresta removida
+     * @param edge aresta removida.
      */
     public void removeEdge(Edge edge) throws Exception {
         edge.getV().removeAdjEdge(edge);

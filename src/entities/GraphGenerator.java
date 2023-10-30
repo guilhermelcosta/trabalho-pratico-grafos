@@ -6,10 +6,10 @@ import java.util.List;
 public class GraphGenerator {
 
     /**
-     * Constroi um grafo euleriano com 'v' vertices
+     * Constroi um grafo euleriano com 'v' vertices.
      *
-     * @param v numero de vertices
-     * @return grafo euleriano
+     * @param v numero de vertices.
+     * @return grafo euleriano.
      */
     public static Graph eulerian(int v) throws Exception {
 
@@ -33,10 +33,10 @@ public class GraphGenerator {
     }
 
     /**
-     * Constroi um grafo semi-euleriano com 'v' vertices
+     * Constroi um grafo semi-euleriano com 'v' vertices.
      *
-     * @param v numero de vertices
-     * @return grafo semi-euleriano
+     * @param v numero de vertices.
+     * @return grafo semi-euleriano.
      */
     public static Graph semiEulerian(int v) throws Exception {
 
@@ -58,10 +58,10 @@ public class GraphGenerator {
     }
 
     /**
-     * Constroi um grafo nao-euleriano com 'v' vertices
+     * Constroi um grafo nao-euleriano com 'v' vertices.
      *
-     * @param v numero de vertices
-     * @return grafo nao-euleriano
+     * @param v numero de vertices.
+     * @return grafo nao-euleriano.
      */
     public static Graph nonEulerian(int v) throws Exception {
 

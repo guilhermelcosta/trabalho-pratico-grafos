@@ -31,7 +31,8 @@ public class GraphUtil {
     }
 
     /**
-     * Realiza busca em largura no grafo.
+     * Realiza busca em largura no grafo (BFS).
+     * O metodo de BFS foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
      *
      * @param graph grafo de referencia.
      * @return booleano indicando se o grafo e ou nao conexo.

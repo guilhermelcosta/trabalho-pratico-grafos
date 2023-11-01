@@ -1,8 +1,6 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Graph {
 
@@ -49,8 +47,27 @@ public class Graph {
      * @param graph grafo de referencia.
      * @return novo grafo.
      */
-    public static Graph copy(Graph graph) {
-        return new Graph(new ArrayList<>(graph.getVertices()), new ArrayList<>(graph.getEdges()), graph.getType());
+    public static Graph copy(Graph graph) throws Exception {
+
+        Graph newGraph = new Graph();
+        List<Vertex> clonedVertices = new ArrayList<>();
+        Map<Integer, Vertex> vertexMap = new HashMap<>();
+
+        for (Vertex vertex : graph.getVertices()) {
+            Vertex clonedVertex = new Vertex(vertex.getId());
+            clonedVertices.add(clonedVertex);
+            vertexMap.put(vertex.getId(), clonedVertex);
+        }
+
+        for (Edge edge : graph.getEdges()) {
+            Vertex v = vertexMap.get(edge.getV().getId());
+            Vertex w = vertexMap.get(edge.getW().getId());
+            newGraph.addEdge(new Edge(v, w));
+        }
+        newGraph.setVertices(clonedVertices);
+        newGraph.setType(graph.getType());
+
+        return newGraph;
     }
 
     /**

@@ -39,17 +39,10 @@ public class GraphUtil {
      */
     public static boolean isConnected(Graph graph) {
 
-        /*todo: esse trecho talvez possa ser melhorado e, em vez de fazer essa verificacao aqui,
-           fazer ela antes de chamar esse metodo. Por que dessa forma, essa busca nao seria eficaz em situacoes
-            mais 'genericas'. Ela fica restrita apenas a aplicacao pro metodo de Fleury.*/
-        List<Vertex> vertices = graph.getVertices().stream()
-                .filter(vertex -> vertex.getDegree() > 0)
-                .toList();
-
-        for (int i = 0; i < vertices.size(); i++) {
+        for (int i = 0; i < graph.getVertices().size(); i++) {
             Set<Vertex> visited = new HashSet<>();
             Queue<Vertex> queue = new LinkedList<>();
-            Vertex startVertex = vertices.get(i);
+            Vertex startVertex = graph.getVertices().get(i);
 
             queue.offer(startVertex);
             visited.add(startVertex);
@@ -66,7 +59,7 @@ public class GraphUtil {
                     }
                 }
             }
-            if (visited.size() == vertices.size())
+            if (visited.size() == graph.getVertices().size())
                 return true;
         }
         return false;
@@ -104,12 +97,26 @@ public class GraphUtil {
 
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
-                /*todo: corrigir .removeEdge() em graphTemp removendo os vertices adjacentes no vertex*/
+//                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
+//                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
+//                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
-                    graphTemp.removeEdge(edge);
+                    Edge currentEdge =  graphTemp.getEdges()
+                            .stream()
+                            .filter(e -> (e.getV().getId() == edge.getV().getId() && e.getW().getId() == edge.getW().getId()))
+                            .findFirst()
+                            .orElse(null);
+                    graphTemp.removeEdge(Objects.requireNonNull(currentEdge));
+                    graphTemp.setVertices(graphTemp.getVertices()
+                            .stream()
+                            .filter(vertex -> vertex.getDegree() > 0)
+                            .toList());
 //                    Verifica se aresta removida e ou nao uma ponte pelo metodo naive. Caso o grafo, apos a remocao da aresta,
 //                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
+//                    Para essa abordagem, deve-se considerar apenas as arestas com grau > 0. Isso e necessario, pois
+//                    caso o grafo ja esteja desconexo (possua arestas com grau = 0), nenhuma aresta mais seria considerada ponte.
+//                    Por isso foi utilizado o graphTemp.setVertices() acima para manter apenas os vertices que ainda podem ser explorados (grau > 0).
                     if (GraphUtil.isConnected(graphTemp)) {
                         graphAux.removeEdge(edge);
                         v = edge.other(v);

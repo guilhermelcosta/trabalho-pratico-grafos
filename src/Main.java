@@ -6,9 +6,14 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         /*
-         Parametros para gerar de grafos:
-         grafos eulerianos, semi-eulerianos ou nao-eulerianos
-         numero de vertices como 100, 1.000, 10.000 ou 100.000
+         1 - Parametros para gerar de grafos:
+          - Grafos eulerianos, semi-eulerianos ou nao-eulerianos
+          - Numero de vertices como 100, 1.000, 10.000 ou 100.000
+
+         2 - Para testar os grafos, usar a classe GraphGenerator. Exemplos com 10.000 vertices:
+          - GraphGenerator.eulerian(10000)
+          - GraphGenerator.semiEulerian(10000)
+          - GraphGenerator.nonEulerian(10000)
          */
 
         Graph graph = GraphGenerator.semiEulerian(100000);

@@ -79,8 +79,8 @@ public class GraphUtil {
                 .filter(vertex -> vertex.getDegree() % 2 != 0)
                 .count();
 
-        if (verticesWithOddDegree > 3) {
-            System.out.println("Numero de vertices com grau impar e maior do que 3 -> Nao existe caminho euleriano");
+        if (verticesWithOddDegree > 2) {
+            System.out.println("Numero de vertices com grau impar e maior do que 2 -> Nao existe caminho euleriano");
             return false;
         }
         List<Integer> visited = new ArrayList<>();

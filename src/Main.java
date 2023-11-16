@@ -10,10 +10,10 @@ public class Main {
           - Grafos eulerianos, semi-eulerianos ou nao-eulerianos
           - Numero de vertices como 100, 1.000, 10.000 ou 100.000
 
-         2 - Para testar os grafos, usar a classe GraphGenerator. Exemplos com 10.000 vertices:
-          - GraphGenerator.eulerian(10000)
-          - GraphGenerator.semiEulerian(10000)
-          - GraphGenerator.nonEulerian(10000)
+         2 - Para testar os grafos, usar a classe GraphGenerator. Exemplos com 100.000 vertices:
+          - GraphGenerator.eulerian(100000)
+          - GraphGenerator.semiEulerian(100000)
+          - GraphGenerator.nonEulerian(100000)
          */
 
         Graph graph = GraphGenerator.semiEulerian(100000);

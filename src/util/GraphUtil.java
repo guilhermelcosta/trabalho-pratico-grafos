@@ -71,9 +71,8 @@ public class GraphUtil {
      *
      * @param graph grafo de referencia.
      * @return booleano indicando se existe ou nao um ciclo euleriano.
-     * @throws Exception lanca excecao caso nao seja possivel remover corretamente a aresta do grafo.
      */
-    public static boolean fleuryNaive(Graph graph, boolean showPath) throws Exception {
+    public static boolean fleuryNaive(Graph graph, boolean showPath) {
 
         int verticesWithOddDegree = (int) graph.getVertices().stream()
                 .filter(vertex -> vertex.getDegree() % 2 != 0)
@@ -95,8 +94,16 @@ public class GraphUtil {
         }
         visited.add(v.getId());
 
+//        todo: criar atributo que possibilite retivar logicamente uma aresta do grafo
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
+
+
+
+
+
+
+
 //                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
 //                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
 //                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.

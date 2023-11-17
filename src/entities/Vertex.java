@@ -52,9 +52,8 @@ public class Vertex {
      * Adiciona um novo vertice adjacente ao vertice atual.
      *
      * @param vertexId id do novo vertice.
-     * @throws Exception lanca excecao caso nao seja possivel atualizar o grau do vertice atual.
      */
-    private void addAdjVertice(Integer vertexId) throws Exception {
+    private void addAdjVertice(Integer vertexId) {
         this.adjVertices.add(vertexId);
         updateDegree();
     }
@@ -63,9 +62,8 @@ public class Vertex {
      * Remove um vertice adjacente ao vertice atual.
      *
      * @param vertexId id do vertice a ser removido.
-     * @throws Exception lanca excecao caso nao seja possivel atualizar o grau do vertice atual.
      */
-    private void removeAdjVertice(Integer vertexId) throws Exception {
+    private void removeAdjVertice(Integer vertexId) {
         this.adjVertices.remove(vertexId);
         updateDegree();
     }
@@ -74,9 +72,8 @@ public class Vertex {
      * Adiciona uma nova aresta adjacente ao vertice atual.
      *
      * @param edge nova aresta adjacente.
-     * @throws Exception lanca excecao caso nao seja possivel atualizar o grau do vertice atual.
      */
-    public void addAdjEdge(Edge edge) throws Exception {
+    public void addAdjEdge(Edge edge) {
         this.adjEdges.add(edge);
         Integer vertexId = edge.other(this).getId();
         addAdjVertice(vertexId);
@@ -87,9 +84,8 @@ public class Vertex {
      * Remove uma aresta adjacente ao vertice atual.
      *
      * @param edge aresta adjacente a ser removida.
-     * @throws Exception lanca excecao caso nao seja possivel atualizar o grau do vertice atual.
      */
-    public void removeAdjEdge(Edge edge) throws Exception {
+    public void removeAdjEdge(Edge edge) {
         this.adjEdges.remove(edge);
         Integer vertexId = edge.other(this).getId();
         removeAdjVertice(vertexId);
@@ -98,15 +94,14 @@ public class Vertex {
 
     /**
      * Atualiza o grau do vertice atual.
-     *
-     * @throws Exception lanca excecao caso nao seja possivel atualizar o grau do vertice atual.
      */
-    private void updateDegree() throws Exception {
+    private void updateDegree() {
         try {
             if (this.adjVertices.size() == this.adjEdges.size())
                 this.degree = this.adjVertices.size();
         } catch (Exception e) {
-            throw new Exception("Erro na atualizacao do grau do vertice");
+            System.err.println("Erro na atualização do grau do vértice: " + e.getMessage());
+            this.degree = -1;
         }
     }
 

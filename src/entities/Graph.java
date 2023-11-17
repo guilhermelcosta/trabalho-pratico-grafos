@@ -47,7 +47,7 @@ public class Graph {
      * @param graph grafo de referencia.
      * @return novo grafo.
      */
-    public static Graph copy(Graph graph) throws Exception {
+    public static Graph copy(Graph graph) {
 
         Graph newGraph = new Graph();
         List<Vertex> clonedVertices = new ArrayList<>();
@@ -83,7 +83,7 @@ public class Graph {
      *
      * @param edge nova aresta.
      */
-    public void addEdge(Edge edge) throws Exception {
+    public void addEdge(Edge edge) {
         edge.getV().addAdjEdge(edge);
         edge.getW().addAdjEdge(edge);
         this.edges.add(edge);
@@ -94,7 +94,7 @@ public class Graph {
      *
      * @param edge aresta removida.
      */
-    public void removeEdge(Edge edge) throws Exception {
+    public void removeEdge(Edge edge) {
         edge.getV().removeAdjEdge(edge);
         edge.getW().removeAdjEdge(edge);
         edges.remove(edge);

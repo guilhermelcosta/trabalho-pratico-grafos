@@ -31,41 +31,6 @@ public class GraphUtil {
     }
 
     /**
-     * Realiza busca em largura no grafo (BFS).
-     * O metodo de BFS foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
-     *
-     * @param graph grafo de referencia.
-     * @return booleano indicando se o grafo e ou nao conexo.
-     */
-    public static boolean isConnected(Graph graph) {
-
-        for (int i = 0; i < graph.getVertices().size(); i++) {
-            Set<Vertex> visited = new HashSet<>();
-            Queue<Vertex> queue = new LinkedList<>();
-            Vertex startVertex = graph.getVertices().get(i);
-
-            queue.offer(startVertex);
-            visited.add(startVertex);
-
-            while (!queue.isEmpty()) {
-                Vertex currentVertex = queue.poll();
-
-                for (Edge edge : currentVertex.getAdjEdges()) {
-                    Vertex neighbor = edge.other(currentVertex);
-
-                    if (!visited.contains(neighbor)) {
-                        visited.add(neighbor);
-                        queue.offer(neighbor);
-                    }
-                }
-            }
-            if (visited.size() == graph.getVertices().size())
-                return true;
-        }
-        return false;
-    }
-
-    /**
      * Implementacao do metodo de Fleury utilizando abordagem naive para identificacao de pontes.
      * O metodo de Fleury foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
      *
@@ -94,16 +59,8 @@ public class GraphUtil {
         }
         visited.add(v.getId());
 
-//        todo: criar atributo que possibilite retivar logicamente uma aresta do grafo
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
-
-
-
-
-
-
-
 //                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
 //                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
 //                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
@@ -143,5 +100,40 @@ public class GraphUtil {
         if (showPath)
             System.out.println(Arrays.toString(visited.toArray()));
         return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
+    }
+
+    /**
+     * Realiza busca em largura no grafo (BFS).
+     * O metodo de BFS foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
+     *
+     * @param graph grafo de referencia.
+     * @return booleano indicando se o grafo e ou nao conexo.
+     */
+    public static boolean isConnected(Graph graph) {
+
+        for (int i = 0; i < graph.getVertices().size(); i++) {
+            Set<Vertex> visited = new HashSet<>();
+            Queue<Vertex> queue = new LinkedList<>();
+            Vertex startVertex = graph.getVertices().get(i);
+
+            queue.offer(startVertex);
+            visited.add(startVertex);
+
+            while (!queue.isEmpty()) {
+                Vertex currentVertex = queue.poll();
+
+                for (Edge edge : currentVertex.getAdjEdges()) {
+                    Vertex neighbor = edge.other(currentVertex);
+
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+            if (visited.size() == graph.getVertices().size())
+                return true;
+        }
+        return false;
     }
 }

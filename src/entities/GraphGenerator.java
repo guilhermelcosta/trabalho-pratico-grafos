@@ -11,7 +11,7 @@ public class GraphGenerator {
      * @param n numero de vertices.
      * @return grafo euleriano.
      */
-    public static Graph eulerian(int n) throws Exception {
+    public static Graph eulerian(int n) {
 
         if (n < 3)
             throw new IllegalArgumentException("O grafo deve possuir no minimo tres vertices");
@@ -38,7 +38,7 @@ public class GraphGenerator {
      * @param n numero de vertices.
      * @return grafo semi-euleriano.
      */
-    public static Graph semiEulerian(int n) throws Exception {
+    public static Graph semiEulerian(int n) {
 
         Graph graph = GraphGenerator.eulerian(n);
 //        Caso o grafo possua mais de 3 vertices, insere uma nova aresta, de modo que 2 vertices
@@ -63,7 +63,7 @@ public class GraphGenerator {
      * @param n numero de vertices.
      * @return grafo nao-euleriano.
      */
-    public static Graph nonEulerian(int n) throws Exception {
+    public static Graph nonEulerian(int n) {
 
         if (n < 4)
             throw new IllegalArgumentException("O grafo nao-euleriano deve possuir no minimo quatro vertices");
@@ -75,6 +75,23 @@ public class GraphGenerator {
 
         graph.addEdge(new Edge(midVertex, lastVertex));
         graph.setType("Non-Eulerian");
+
+        return graph;
+    }
+
+    /**
+     * Constroi um grafo conexo por uma ponte com 'n' vertices.
+     *
+     * @param n numero de vertices.
+     * @return grafo conexo por ponte.
+     */
+    public static Graph bridgeConnected(int n) {
+
+        Graph graph = GraphGenerator.eulerian(n);
+
+//        Como o grafo euleriano gerado e circular, a remocao de qualquer aresta
+//        faz com que as demais se tornem pontes.
+        graph.removeEdge(graph.getEdges().get(0));
 
         return graph;
     }

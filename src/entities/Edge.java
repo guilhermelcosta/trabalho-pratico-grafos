@@ -4,6 +4,7 @@ public class Edge {
 
     private Vertex v;
     private Vertex w;
+    private boolean isBridge;
 
     /**
      * Construtor padrao de uma aresta.
@@ -14,6 +15,7 @@ public class Edge {
     public Edge(Vertex v, Vertex w) {
         this.v = v;
         this.w = w;
+        this.isBridge = false;
     }
 
     /**
@@ -50,4 +52,11 @@ public class Edge {
         this.w = w;
     }
 
+    public boolean isBridge() {
+        return isBridge;
+    }
+
+    public void setBridge(boolean bridge) {
+        isBridge = bridge;
+    }
 }

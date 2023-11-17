@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,18 +81,20 @@ public class GraphGenerator {
     }
 
     /**
-     * Constroi um grafo conexo por uma ponte com 'n' vertices.
+     * Constroi um grafo conexo com pontes com 'n' vertices.
      *
      * @param n numero de vertices.
-     * @return grafo conexo por ponte.
+     * @return grafo conexo com pontes.
      */
     public static Graph bridgeConnected(int n) {
 
-        Graph graph = GraphGenerator.eulerian(n);
+        if (n < 6)
+            throw new IllegalArgumentException("O grafo conexo com pontes deve possuir no minimo seis vertices");
 
-//        Como o grafo euleriano gerado e circular, a remocao de qualquer aresta
-//        faz com que as demais se tornem pontes.
+        Graph graph = GraphGenerator.nonEulerian(n);
+
         graph.removeEdge(graph.getEdges().get(0));
+        graph.setType("Bridge-connected");
 
         return graph;
     }

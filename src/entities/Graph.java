@@ -79,6 +79,17 @@ public class Graph {
     }
 
     /**
+     * Imprime as arestas que sao ponte do grafo: [v] - [w].
+     */
+    public void printBridges() {
+        edges.sort(Comparator.comparingInt(edge -> edge.getV().getId()));
+        edges.forEach(edge -> {
+            if (edge.isBridge())
+                edge.print();
+        });
+    }
+
+    /**
      * Adiciona uma nova aresta no grafo e, em seguida, atualiza a lista de adjacencia dos vertices relacionados.
      *
      * @param edge nova aresta.
@@ -98,6 +109,10 @@ public class Graph {
         edge.getV().removeAdjEdge(edge);
         edge.getW().removeAdjEdge(edge);
         edges.remove(edge);
+    }
+
+    public boolean hasBridges() {
+        return this.getEdges().stream().anyMatch(Edge::isBridge);
     }
 
     public List<Vertex> getVertices() {

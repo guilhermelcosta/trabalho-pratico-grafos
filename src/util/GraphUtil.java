@@ -66,7 +66,7 @@ public class GraphUtil {
 //                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
-                    Edge currentEdge =  graphTemp.getEdges()
+                    Edge currentEdge = graphTemp.getEdges()
                             .stream()
                             .filter(e -> (e.getV().getId() == edge.getV().getId() && e.getW().getId() == edge.getW().getId()))
                             .findFirst()
@@ -136,4 +136,65 @@ public class GraphUtil {
         }
         return false;
     }
+
+    /**
+     * Encontra todas as pontes em um grafo.
+     *
+     * @param graph grafo de referencia.
+     */
+    public static void findBridges(Graph graph) {
+
+        int numberOfVertices = graph.getVertices().size() + 1;
+        int time = 0;
+        int[] disc = new int[numberOfVertices], low = new int[numberOfVertices];
+        boolean[] visited = new boolean[numberOfVertices];
+        Vertex[] parent = new Vertex[numberOfVertices];
+
+//        O valor inicial de 'i' foi definido dessa forma para que grafo
+//        possa iniciar com vertice de id = 0 ou 1, sem problemas.
+        for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++) {
+            parent[i] = null;
+            visited[i] = false;
+        }
+
+        for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++)
+            if (!visited[i])
+                findAllBridgesTarjanRecursive(graph, graph.getVertices().get(i), parent, time, visited, disc, low);
+    }
+
+    /**
+     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade, de maneira recursiva.
+     * Referencias:
+     * A note on finding the bridges of a graph: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
+     * Bridges in a graph: https://www.geeksforgeeks.org/bridge-in-a-graph/
+     * Find Bridges in a graph using Tarjan's Algorithm: https://gist.github.com/SuryaPratapK/2774cb957a27448b485609418e272f2b
+     *
+     * @param graph   grafo de referencia.
+     * @param v       vertice.
+     * @param parent  array de parentes.
+     * @param time    tempo de execucao.
+     * @param visited array de vertices visitados.
+     * @param disc    array de tempo de descobrimento.
+     * @param low     array de menor tempo em vertices adjacentes.
+     */
+    private static void findAllBridgesTarjanRecursive(Graph graph, Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+
+        visited[v.getId()] = true;
+        disc[v.getId()] = low[v.getId()] = ++time;
+
+        for (Edge edge : v.getAdjEdges()) {
+            Vertex w = edge.other(v);
+
+            if (!visited[w.getId()]) {
+                parent[w.getId()] = v;
+                findAllBridgesTarjanRecursive(graph, w, parent, time, visited, disc, low);
+                low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
+
+                if (low[w.getId()] > disc[v.getId()])
+                    edge.setBridge(true);
+            } else if (w != parent[v.getId()])
+                low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
+        }
+    }
+
 }

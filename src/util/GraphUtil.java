@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalTime;
 import java.util.*;
 
 public class GraphUtil {
@@ -47,7 +48,7 @@ public class GraphUtil {
 
             if (file.exists()) {
                 try (PrintWriter printWriter = new PrintWriter(new FileWriter(file, true))) {
-                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-15s | %-20s | %-20s | %-20s | %-15s | %-25s",
                             graph.getType(),
                             graph.getVertices().size(),
                             graph.getEdges().size(),
@@ -55,20 +56,22 @@ public class GraphUtil {
                             (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
                             graph.hasEulerianCycle() ? "Sim" : "Nao",
                             graph.hasEulerianPath() ? "Sim" : "Nao",
-                            graph.hasBridges() ? "Sim" : "Nao"));
+                            graph.hasBridges() ? "Sim" : "Nao",
+                            LocalTime.now()));
                 }
             } else {
                 try (PrintWriter printWriter = new PrintWriter(filePath)) {
-                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-15s | %-20s | %-20s | %-20s | %-15s | %-25s",
                             "Tipo",
                             "Vertices",
                             "Arestas",
                             "Metodo",
                             "Tempo de execucao",
-                            "Possui ciclo euleriano?",
-                            "Possui trajeto euleriano?",
-                            "Possui pontes?"));
-                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                            "Ciclo euleriano?",
+                            "Trajeto euleriano?",
+                            "Possui pontes?",
+                            "Execução"));
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-15s | %-20s | %-20s | %-20s | %-15s | %-25s",
                             graph.getType(),
                             graph.getVertices().size(),
                             graph.getEdges().size(),
@@ -76,7 +79,8 @@ public class GraphUtil {
                             (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
                             graph.hasEulerianCycle() ? "Sim" : "Nao",
                             graph.hasEulerianPath() ? "Sim" : "Nao",
-                            graph.hasBridges() ? "Sim" : "Nao"));
+                            graph.hasBridges() ? "Sim" : "Nao",
+                            LocalTime.now()));
                 }
             }
         } catch (IOException e) {
@@ -292,7 +296,7 @@ public class GraphUtil {
 
         for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++)
             if (!visited[i])
-                findAllBridgesTarjanRecursive(graph.getVertices().get(i), parent, time, visited, disc, low);
+                findAllBridgesTarjan(graph.getVertices().get(i), parent, time, visited, disc, low);
     }
 
     /**
@@ -309,7 +313,8 @@ public class GraphUtil {
      * @param disc    array de tempo de descobrimento.
      * @param low     array de menor tempo em vertices adjacentes.
      */
-    private static void findAllBridgesTarjanRecursive(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+    private static void findAllBridgesTarjan(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+//        todo: adaptar metodo para abordagem iterativa
 
         visited[v.getId()] = true;
         disc[v.getId()] = low[v.getId()] = ++time;
@@ -319,7 +324,7 @@ public class GraphUtil {
 
             if (!visited[w.getId()]) {
                 parent[w.getId()] = v;
-                findAllBridgesTarjanRecursive(w, parent, time, visited, disc, low);
+                findAllBridgesTarjan(w, parent, time, visited, disc, low);
                 low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
 
                 if (low[w.getId()] > disc[v.getId()])

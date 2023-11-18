@@ -10,7 +10,6 @@ public class Graph {
     private boolean hasEulerianCycle;
     private boolean hasEulerianPath;
 
-
     /**
      * Construtor padrao do grafo com tipo.
      *

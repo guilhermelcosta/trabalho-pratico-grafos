@@ -156,7 +156,7 @@ public class GraphUtil {
         if (showPath)
             System.out.println(Arrays.toString(visited.toArray()));
 
-//        Informacoes para gerar log
+//        Informacoes para gerar log.
         if (Objects.equals(visited.get(0), visited.get(visited.size() - 1))) {
             graph.setHasEulerianCycle(true);
         } else
@@ -228,7 +228,7 @@ public class GraphUtil {
     }
 
     /**
-     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade, de maneira recursiva.
+     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade (DPS).
      * Referencias:
      * A note on finding the bridges of a graph.txt: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
      * Bridges in a graph.txt: https://www.geeksforgeeks.org/bridge-in-a-graph/

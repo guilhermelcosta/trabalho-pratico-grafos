@@ -101,7 +101,6 @@ public class GraphGenerator {
             case 2 -> GraphGenerator.nonEulerian(n);
             default -> graph;
         };
-
         graph.removeEdge(graph.getEdges().get(0));
         graph.setType("Bridge-connected");
 

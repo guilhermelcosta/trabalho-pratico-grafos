@@ -3,6 +3,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class GraphGenerator {
 
@@ -91,7 +92,15 @@ public class GraphGenerator {
         if (n < 6)
             throw new IllegalArgumentException("O grafo conexo com pontes deve possuir no minimo seis vertices");
 
-        Graph graph = GraphGenerator.nonEulerian(n);
+        Graph graph = new Graph();
+        Random random = new Random();
+
+        graph = switch (random.nextInt(1, 3)) {
+            case 0 -> GraphGenerator.eulerian(n);
+            case 1 -> GraphGenerator.semiEulerian(n);
+            case 2 -> GraphGenerator.nonEulerian(n);
+            default -> graph;
+        };
 
         graph.removeEdge(graph.getEdges().get(0));
         graph.setType("Bridge-connected");

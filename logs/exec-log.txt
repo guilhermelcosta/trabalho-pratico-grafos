@@ -5,3 +5,15 @@ Eulerian           | 100        | 100        | Fleury naive         | 0ms       
 Semi-Eulerian      | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Nao                      
 Non-Eulerian       | 100        | 102        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Nao                      
 Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 1000       | 1001       | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 9          | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 10         | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 10         | Fleury naive         | 15ms                 | Nao                       | Sim                       | Sim                      
+Bridge-connected   | 10         | 10         | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 10         | 10         | Fleury naive         | 10ms                 | Nao                       | Sim                       | Sim                      

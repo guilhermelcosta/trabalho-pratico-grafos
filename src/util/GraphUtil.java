@@ -203,6 +203,74 @@ public class GraphUtil {
     }
 
     /**
+     * Implementacao do metodo de Fleury utilizando abordagem pelo metodo de Tarjan para identificacao de pontes.
+     * O metodo de Fleury foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
+     * O metodo de Tarjan (1974) foi utilizado em conjunto com busca em profundidade (DPS), as referencias estao no metodo de identificacao de pontes.
+     *
+     * @param graph grafo de referencia.
+     * @return booleano indicando se existe ou nao um ciclo euleriano.
+     */
+    public static boolean fleuryTarjan(Graph graph, boolean showPath) throws IOException {
+
+        long startTime = System.currentTimeMillis();
+        int verticesWithOddDegree = (int) graph.getVertices().stream()
+                .filter(vertex -> vertex.getDegree() % 2 != 0)
+                .count();
+
+        if (verticesWithOddDegree > 2) {
+            System.out.println("Numero de vertices com grau impar e maior do que 2 -> Nao existe caminho euleriano");
+            GraphUtil.generateLog(graph, System.currentTimeMillis() - startTime, "Fleury tarjan");
+            return false;
+        }
+        List<Integer> visited = new ArrayList<>();
+        Graph graphAux = Graph.copy(graph);
+        Vertex v = graphAux.getVertices().get(0);
+//        Seleciona vertice inicial com grau impar, se tiver. Caso contrario, inicia do primeiro vertice.
+        for (Vertex vertex : graphAux.getVertices()) {
+            if (vertex.getDegree() % 2 != 0) {
+                v = vertex;
+                break;
+            }
+        }
+        visited.add(v.getId());
+
+        while (!graphAux.getEdges().isEmpty()) {
+            if (v.getDegree() > 1) {
+//                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
+//                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
+//                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
+                for (Edge edge : v.getAdjEdges()) {
+                    if (!edge.isBridge()) {
+                        graphAux.removeEdge(edge);
+                        v = edge.other(v);
+                        visited.add(v.getId());
+                        break;
+                    }
+                }
+            } else {
+//                Caso o vertice analisado nao tenha nenhuma aresta, que nao uma ponte,
+//                entao e removida a aresta de ponte.
+                Edge edge = v.getAdjEdges().get(0);
+                v = edge.other(v);
+                visited.add(v.getId());
+                graphAux.removeEdge(edge);
+            }
+        }
+        if (showPath)
+            System.out.println(Arrays.toString(visited.toArray()));
+
+//        Informacoes para gerar log.
+        if (Objects.equals(visited.get(0), visited.get(visited.size() - 1))) {
+            graph.setHasEulerianCycle(true);
+        } else
+            graph.setHasEulerianPath(true);
+
+        GraphUtil.generateLog(graph, System.currentTimeMillis() - startTime, "Fleury tarjan");
+
+        return graph.hasEulerianCycle();
+    }
+
+    /**
      * Encontra todas as pontes em um grafo.
      *
      * @param graph grafo de referencia.

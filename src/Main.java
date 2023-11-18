@@ -17,10 +17,11 @@ public class Main {
           - GraphGenerator.nonEulerian(100000)
          */
 
-        Graph graph = GraphGenerator.bridgeConnected(10);
+        Graph graph = GraphGenerator.bridgeConnected(1000);
         GraphUtil.saveAsTxt(graph);
         GraphUtil.findBridges(graph);
-        GraphUtil.fleuryNaive(graph, true);
+        GraphUtil.fleuryNaive(graph, false);
+        GraphUtil.fleuryTarjan(graph,false);
 
     }
 }

@@ -32,6 +32,14 @@ public class GraphUtil {
         }
     }
 
+    /**
+     * Armazena o log de execucoes.
+     *
+     * @param graph grafo de referencia.
+     * @param elapsedTime tempo de execucao.
+     * @param method metodo utilizado.
+     * @throws IOException lanca excecao caso o caminho para armazenar o grafo nao seja encontrado.
+     */
     private static void generateLog(Graph graph, long elapsedTime, String method) throws IOException {
         try {
             String filePath = "logs/exec-log.txt";
@@ -47,7 +55,7 @@ public class GraphUtil {
                             (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
                             graph.hasEulerianCycle() ? "Sim" : "Nao",
                             graph.hasEulerianPath() ? "Sim" : "Nao",
-                            graph.hasBridges()? "Sim" : "Nao"));
+                            graph.hasBridges() ? "Sim" : "Nao"));
                 }
             } else {
                 try (PrintWriter printWriter = new PrintWriter(filePath)) {
@@ -68,14 +76,13 @@ public class GraphUtil {
                             (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
                             graph.hasEulerianCycle() ? "Sim" : "Nao",
                             graph.hasEulerianPath() ? "Sim" : "Nao",
-                            graph.hasBridges()? "Sim" : "Nao"));
+                            graph.hasBridges() ? "Sim" : "Nao"));
                 }
             }
         } catch (IOException e) {
             throw new IOException("Erro ao salvar o arquivo.");
         }
     }
-
 
     /**
      * Implementacao do metodo de Fleury utilizando abordagem naive para identificacao de pontes.

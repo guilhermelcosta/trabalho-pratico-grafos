@@ -7,6 +7,9 @@ public class Graph {
     private List<Vertex> vertices;
     private List<Edge> edges;
     private String type;
+    private boolean hasEulerianCycle;
+    private boolean hasEulerianPath;
+
 
     /**
      * Construtor padrao do grafo com tipo.
@@ -18,6 +21,8 @@ public class Graph {
         this.vertices = vertices;
         this.edges = edges;
         this.type = type;
+        this.hasEulerianCycle = false;
+        this.hasEulerianPath = false;
     }
 
     /**
@@ -30,6 +35,8 @@ public class Graph {
         this.vertices = vertices;
         this.edges = edges;
         this.type = null;
+        this.hasEulerianCycle = false;
+        this.hasEulerianPath = false;
     }
 
     /**
@@ -39,6 +46,8 @@ public class Graph {
         this.vertices = new ArrayList<>();
         this.edges = new ArrayList<>();
         this.type = null;
+        this.hasEulerianCycle = false;
+        this.hasEulerianPath = false;
     }
 
     /**
@@ -139,4 +148,21 @@ public class Graph {
         this.type = type;
     }
 
+    public boolean hasEulerianCycle() {
+        return hasEulerianCycle;
+    }
+
+    public void setHasEulerianCycle(boolean hasEulerianCycle) {
+        if (hasEulerianCycle)
+            this.setHasEulerianPath(true);
+        this.hasEulerianCycle = hasEulerianCycle;
+    }
+
+    public boolean hasEulerianPath() {
+        return hasEulerianPath;
+    }
+
+    public void setHasEulerianPath(boolean hasEulerianPath) {
+        this.hasEulerianPath = hasEulerianPath;
+    }
 }

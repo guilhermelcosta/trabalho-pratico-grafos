@@ -17,27 +17,10 @@ public class Main {
           - GraphGenerator.nonEulerian(100000)
          */
 
-        Graph graph = GraphGenerator.bridgeConnected(10);
+        Graph graph = GraphGenerator.bridgeConnected(100);
+        GraphUtil.saveAsTxt(graph);
         GraphUtil.findBridges(graph);
-
-        long start = System.currentTimeMillis();
-        boolean hasBridges = graph.hasBridges();
-        boolean hasEulerianCycle = GraphUtil.fleuryNaive(graph, true);
-        long end = System.currentTimeMillis();
-        long elapsedTime = end - start;
-
-        if (hasBridges) {
-            System.out.println("Arestas de ponte: ");
-            graph.printBridges();
-        }
-//        todo: revisar essa condicao, ela esta errada
-        if (!graph.getType().equals("Non-Eulerian") || !graph.getType().equals("Bridge-connected")) {
-            if (hasEulerianCycle)
-                System.out.println("Existe ciclo euleriano");
-            else
-                System.out.println("Existe trajeto euleriano");
-        }
-        System.out.println("Tempo de execucao: " + (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"));
+        GraphUtil.fleuryNaive(graph, false);
 
     }
 }

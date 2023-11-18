@@ -4,6 +4,8 @@ import entities.Edge;
 import entities.Graph;
 import entities.Vertex;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -18,7 +20,7 @@ public class GraphUtil {
      */
     public static void saveAsTxt(Graph graph) throws IOException {
         try {
-            PrintWriter printWriter = new PrintWriter("src/graphs/graph-" + graph.getType().toLowerCase() + "-" + graph.getVertices().size() + ".txt");
+            PrintWriter printWriter = new PrintWriter("graphs/graph-" + graph.getType().toLowerCase() + "-" + graph.getVertices().size() + ".txt");
             List<Edge> edges = graph.getEdges();
 
             printWriter.println(graph.getVertices().size() + " " + graph.getEdges().size() + "\n");
@@ -30,6 +32,51 @@ public class GraphUtil {
         }
     }
 
+    private static void generateLog(Graph graph, long elapsedTime, String method) throws IOException {
+        try {
+            String filePath = "logs/exec-log.txt";
+            File file = new File(filePath);
+
+            if (file.exists()) {
+                try (PrintWriter printWriter = new PrintWriter(new FileWriter(file, true))) {
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                            graph.getType(),
+                            graph.getVertices().size(),
+                            graph.getEdges().size(),
+                            method,
+                            (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
+                            graph.hasEulerianCycle() ? "Sim" : "Nao",
+                            graph.hasEulerianPath() ? "Sim" : "Nao",
+                            graph.hasBridges()? "Sim" : "Nao"));
+                }
+            } else {
+                try (PrintWriter printWriter = new PrintWriter(filePath)) {
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                            "Tipo",
+                            "Vertices",
+                            "Arestas",
+                            "Metodo",
+                            "Tempo de execucao",
+                            "Possui ciclo euleriano?",
+                            "Possui trajeto euleriano?",
+                            "Possui pontes?"));
+                    printWriter.println(String.format("%-18s | %-10s | %-10s | %-20s | %-20s | %-25s | %-25s | %-25s",
+                            graph.getType(),
+                            graph.getVertices().size(),
+                            graph.getEdges().size(),
+                            method,
+                            (elapsedTime >= 1000 ? elapsedTime / 1000 + "s" : elapsedTime + "ms"),
+                            graph.hasEulerianCycle() ? "Sim" : "Nao",
+                            graph.hasEulerianPath() ? "Sim" : "Nao",
+                            graph.hasBridges()? "Sim" : "Nao"));
+                }
+            }
+        } catch (IOException e) {
+            throw new IOException("Erro ao salvar o arquivo.");
+        }
+    }
+
+
     /**
      * Implementacao do metodo de Fleury utilizando abordagem naive para identificacao de pontes.
      * O metodo de Fleury foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
@@ -37,14 +84,16 @@ public class GraphUtil {
      * @param graph grafo de referencia.
      * @return booleano indicando se existe ou nao um ciclo euleriano.
      */
-    public static boolean fleuryNaive(Graph graph, boolean showPath) {
+    public static boolean fleuryNaive(Graph graph, boolean showPath) throws IOException {
 
+        long startTime = System.currentTimeMillis();
         int verticesWithOddDegree = (int) graph.getVertices().stream()
                 .filter(vertex -> vertex.getDegree() % 2 != 0)
                 .count();
 
         if (verticesWithOddDegree > 2) {
             System.out.println("Numero de vertices com grau impar e maior do que 2 -> Nao existe caminho euleriano");
+            GraphUtil.generateLog(graph, System.currentTimeMillis() - startTime, "Fleury naive");
             return false;
         }
         List<Integer> visited = new ArrayList<>();
@@ -99,7 +148,16 @@ public class GraphUtil {
         }
         if (showPath)
             System.out.println(Arrays.toString(visited.toArray()));
-        return Objects.equals(visited.get(0), visited.get(visited.size() - 1));
+
+//        Informacoes para gerar log
+        if (Objects.equals(visited.get(0), visited.get(visited.size() - 1))) {
+            graph.setHasEulerianCycle(true);
+        } else
+            graph.setHasEulerianPath(true);
+
+        GraphUtil.generateLog(graph, System.currentTimeMillis() - startTime, "Fleury naive");
+
+        return graph.hasEulerianCycle();
     }
 
     /**
@@ -159,17 +217,16 @@ public class GraphUtil {
 
         for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++)
             if (!visited[i])
-                findAllBridgesTarjanRecursive(graph, graph.getVertices().get(i), parent, time, visited, disc, low);
+                findAllBridgesTarjanRecursive(graph.getVertices().get(i), parent, time, visited, disc, low);
     }
 
     /**
      * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade, de maneira recursiva.
      * Referencias:
-     * A note on finding the bridges of a graph: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
-     * Bridges in a graph: https://www.geeksforgeeks.org/bridge-in-a-graph/
-     * Find Bridges in a graph using Tarjan's Algorithm: https://gist.github.com/SuryaPratapK/2774cb957a27448b485609418e272f2b
+     * A note on finding the bridges of a graph.txt: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
+     * Bridges in a graph.txt: https://www.geeksforgeeks.org/bridge-in-a-graph/
+     * Find Bridges in a graph.txt using Tarjan's Algorithm: https://gist.github.com/SuryaPratapK/2774cb957a27448b485609418e272f2b
      *
-     * @param graph   grafo de referencia.
      * @param v       vertice.
      * @param parent  array de parentes.
      * @param time    tempo de execucao.
@@ -177,7 +234,7 @@ public class GraphUtil {
      * @param disc    array de tempo de descobrimento.
      * @param low     array de menor tempo em vertices adjacentes.
      */
-    private static void findAllBridgesTarjanRecursive(Graph graph, Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+    private static void findAllBridgesTarjanRecursive(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
 
         visited[v.getId()] = true;
         disc[v.getId()] = low[v.getId()] = ++time;
@@ -187,7 +244,7 @@ public class GraphUtil {
 
             if (!visited[w.getId()]) {
                 parent[w.getId()] = v;
-                findAllBridgesTarjanRecursive(graph, w, parent, time, visited, disc, low);
+                findAllBridgesTarjanRecursive(w, parent, time, visited, disc, low);
                 low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
 
                 if (low[w.getId()] > disc[v.getId()])

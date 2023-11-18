@@ -1,0 +1,7 @@
+Tipo               | Vertices   | Arestas    | Metodo               | Tempo de execucao    | Possui ciclo euleriano?   | Possui trajeto euleriano? | Possui pontes?           
+Bridge-connected   | 100        | 101        | Fleury naive         | 1ms                  | Nao                       | Nao                       | Sim                      
+Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
+Eulerian           | 100        | 100        | Fleury naive         | 0ms                  | Sim                       | Sim                       | Nao                      
+Semi-Eulerian      | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Nao                      
+Non-Eulerian       | 100        | 102        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Nao                      
+Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      

@@ -6,8 +6,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         /*
-         1) Parametros p
-         ara gerar de grafos:
+         1) Parametros para gerar de grafos:
           - Grafos eulerianos, semi-eulerianos ou nao-eulerianos
           - Numero de vertices como 100, 1.000, 10.000 ou 100.000
 

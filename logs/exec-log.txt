@@ -1,39 +1,59 @@
-Tipo               | Vertices   | Arestas    | Metodo               | Tempo de execucao    | Possui ciclo euleriano?   | Possui trajeto euleriano? | Possui pontes?           
-Bridge-connected   | 100        | 101        | Fleury naive         | 1ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Eulerian           | 100        | 100        | Fleury naive         | 0ms                  | Sim                       | Sim                       | Nao                      
-Semi-Eulerian      | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Nao                      
-Non-Eulerian       | 100        | 102        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Nao                      
-Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1001       | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 9          | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 10         | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 10         | Fleury naive         | 15ms                 | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 10         | 10         | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 10         | Fleury naive         | 10ms                 | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 11         | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 10         | 10         | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 100        | 101        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 100        | 101        | Fleury naive         | 4ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 100        | 100        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 100        | 100        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 500        | 500        | Fleury naive         | 0ms                  | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 500        | 501        | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 500        | 500        | Fleury naive         | 16ms                 | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 900        | 900        | Fleury naive         | 16ms                 | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 900        | 901        | Fleury naive         | 1ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 900        | 901        | Fleury tarjan        | 1ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1001       | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1001       | Fleury tarjan        | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1001       | Fleury naive         | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1001       | Fleury tarjan        | 0ms                  | Nao                       | Nao                       | Sim                      
-Bridge-connected   | 1000       | 1000       | Fleury naive         | 15ms                 | Nao                       | Sim                       | Sim                      
-Bridge-connected   | 1000       | 1000       | Fleury tarjan        | 0ms                  | Nao                       | Sim                       | Sim                      
+Tipo               | Vertices   | Arestas    | Metodo          | Tempo de execucao    | Ciclo euleriano?     | Trajeto euleriano?   | Possui pontes?  | Execução                 
+Bridge-connected   | 2000       | 2000       | Fleury naive    | 11ms                 | Nao                  | Sim                  | Sim             | 15:12:38.128126200       
+Bridge-connected   | 2000       | 2000       | Fleury tarjan   | 3ms                  | Nao                  | Sim                  | Sim             | 15:12:38.132128400       
+Bridge-connected   | 2000       | 2000       | Fleury naive    | 9ms                  | Nao                  | Sim                  | Sim             | 15:12:40.297953600       
+Bridge-connected   | 2000       | 2000       | Fleury tarjan   | 2ms                  | Nao                  | Sim                  | Sim             | 15:12:40.304102600       
+Bridge-connected   | 2000       | 2001       | Fleury naive    | 1ms                  | Nao                  | Nao                  | Sim             | 15:12:42.418334200       
+Bridge-connected   | 2000       | 2001       | Fleury tarjan   | 0ms                  | Nao                  | Nao                  | Sim             | 15:12:42.422333700       
+Bridge-connected   | 2000       | 2000       | Fleury naive    | 11ms                 | Nao                  | Sim                  | Sim             | 15:13:11.852838200       
+Bridge-connected   | 2000       | 2000       | Fleury tarjan   | 3ms                  | Nao                  | Sim                  | Sim             | 15:13:11.859006400       
+Eulerian           | 2000       | 2000       | Fleury naive    | 12ms                 | Sim                  | Sim                  | Nao             | 15:35:14.409383200       
+Eulerian           | 2000       | 2000       | Fleury tarjan   | 3ms                  | Sim                  | Sim                  | Nao             | 15:35:14.417897300       
+Eulerian           | 5000       | 5000       | Fleury naive    | 25ms                 | Sim                  | Sim                  | Nao             | 15:36:34.191506100       
+Eulerian           | 5000       | 5000       | Fleury tarjan   | 9ms                  | Sim                  | Sim                  | Nao             | 15:36:34.208567700       
+Eulerian           | 10         | 10         | Fleury naive    | 9ms                  | Sim                  | Sim                  | Nao             | 15:38:39.834121          
+Eulerian           | 10         | 10         | Fleury tarjan   | 1ms                  | Sim                  | Sim                  | Nao             | 15:38:39.841120600       
+Semi-Eulerian      | 10         | 11         | Fleury naive    | 5ms                  | Nao                  | Sim                  | Nao             | 15:39:25.510931100       
+Semi-Eulerian      | 10         | 11         | Fleury tarjan   | 1ms                  | Nao                  | Sim                  | Nao             | 15:39:25.515446800       
+Semi-Eulerian      | 5000       | 5001       | Fleury naive    | 42ms                 | Nao                  | Sim                  | Nao             | 15:58:26.766831200       
+Semi-Eulerian      | 5000       | 5001       | Fleury tarjan   | 8ms                  | Nao                  | Sim                  | Nao             | 15:58:26.781859500       
+Bridge-connected   | 4000       | 4000       | Fleury naive    | 20ms                 | Nao                  | Sim                  | Sim             | 15:58:43.117671900       
+Bridge-connected   | 4000       | 4000       | Fleury tarjan   | 7ms                  | Nao                  | Sim                  | Sim             | 15:58:43.127192700       
+Semi-Eulerian      | 10000      | 10001      | Fleury naive    | 57ms                 | Nao                  | Sim                  | Nao             | 15:59:23.437001300       
+Semi-Eulerian      | 100000     | 100001     | Fleury naive    | 810ms                | Nao                  | Sim                  | Nao             | 15:59:33.784816300       
+Semi-Eulerian      | 1000000    | 1000001    | Fleury naive    | 74s                  | Nao                  | Sim                  | Nao             | 16:01:02.275574800       
+Semi-Eulerian      | 5          | 6          | Fleury naive    | 0ms                  | Nao                  | Sim                  | Nao             | 12:32:03.535609600       
+Semi-Eulerian      | 5          | 6          | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Nao             | 12:32:03.535609600       
+Bridge-connected   | 5          | 6          | Fleury naive    | 0ms                  | Nao                  | Sim                  | Nao             | 12:32:08.598517200       
+Bridge-connected   | 5          | 6          | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Nao             | 12:32:08.615170          
+Bridge-connected   | 6          | 6          | Fleury naive    | 3ms                  | Nao                  | Sim                  | Sim             | 12:32:28.359156700       
+Bridge-connected   | 6          | 6          | Fleury tarjan   | 1ms                  | Nao                  | Sim                  | Sim             | 12:32:28.362154700       
+Bridge-connected   | 6          | 7          | Fleury naive    | 16ms                 | Nao                  | Nao                  | Nao             | 12:37:23.322778900       
+Bridge-connected   | 6          | 7          | Fleury tarjan   | 0ms                  | Nao                  | Nao                  | Sim             | 12:37:23.325788900       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 18ms                 | Nao                  | Sim                  | Nao             | 12:37:31.090814700       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Sim             | 12:37:31.090814700       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 16ms                 | Nao                  | Sim                  | Nao             | 12:37:41.457192200       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Sim             | 12:37:41.472814300       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 16ms                 | Nao                  | Sim                  | Nao             | 12:38:19.461699300       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 16ms                 | Nao                  | Sim                  | Sim             | 12:38:19.477324400       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 15ms                 | Nao                  | Sim                  | Nao             | 12:38:23.462301900       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Sim             | 12:38:23.477924400       
+Bridge-connected   | 10         | 10         | Fleury naive    | 0ms                  | Nao                  | Sim                  | Nao             | 12:38:29.527870600       
+Bridge-connected   | 10         | 10         | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Sim             | 12:38:29.527870600       
+Bridge-connected   | 10         | 10         | Fleury naive    | 5ms                  | Nao                  | Sim                  | Nao             | 12:38:51.701851100       
+Bridge-connected   | 10         | 10         | Fleury tarjan   | 0ms                  | Nao                  | Sim                  | Sim             | 12:38:51.701851100       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 16ms                 | Nao                  | Sim                  | Nao             | 12:38:56.384636300       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 11ms                 | Nao                  | Sim                  | Sim             | 12:38:56.395148800       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 15ms                 | Nao                  | Sim                  | Nao             | 12:39:31.084501200       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 16ms                 | Nao                  | Sim                  | Sim             | 12:39:31.100125300       
+Bridge-connected   | 5000       | 5001       | Fleury naive    | 0ms                  | Nao                  | Nao                  | Nao             | 12:39:38.686378800       
+Bridge-connected   | 5000       | 5001       | Fleury tarjan   | 16ms                 | Nao                  | Nao                  | Sim             | 12:39:38.702002500       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 31ms                 | Nao                  | Sim                  | Nao             | 12:39:49.669370600       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 15ms                 | Nao                  | Sim                  | Sim             | 12:39:49.684883600       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 16ms                 | Nao                  | Sim                  | Nao             | 12:40:37.213642300       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 16ms                 | Nao                  | Sim                  | Sim             | 12:40:37.229267900       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 6ms                  | Nao                  | Sim                  | Nao             | 12:41:35.930659800       
+Bridge-connected   | 5000       | 5001       | Fleury naive    | 0ms                  | Nao                  | Nao                  | Nao             | 12:41:38.464798600       
+Bridge-connected   | 5000       | 5001       | Fleury tarjan   | 0ms                  | Nao                  | Nao                  | Sim             | 12:41:38.480440100       
+Bridge-connected   | 5000       | 5000       | Fleury naive    | 16ms                 | Nao                  | Sim                  | Nao             | 12:41:40.368815800       
+Bridge-connected   | 5000       | 5000       | Fleury tarjan   | 16ms                 | Nao                  | Sim                  | Sim             | 12:41:40.384440800       

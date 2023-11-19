@@ -221,6 +221,8 @@ public class GraphUtil {
                 .filter(vertex -> vertex.getDegree() % 2 != 0)
                 .count();
 
+        GraphUtil.findBridges(graph);
+
         if (verticesWithOddDegree > 2) {
             System.out.println("Numero de vertices com grau impar e maior do que 2 -> Nao existe caminho euleriano");
             GraphUtil.generateLog(graph, System.currentTimeMillis() - startTime, "Fleury tarjan");
@@ -279,7 +281,7 @@ public class GraphUtil {
      *
      * @param graph grafo de referencia.
      */
-    public static void findBridges(Graph graph) {
+    private static void findBridges(Graph graph) {
 
         int numberOfVertices = graph.getVertices().size() + 1;
         int time = 0;

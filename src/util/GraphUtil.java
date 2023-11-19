@@ -36,9 +36,9 @@ public class GraphUtil {
     /**
      * Armazena o log de execucoes.
      *
-     * @param graph grafo de referencia.
+     * @param graph       grafo de referencia.
      * @param elapsedTime tempo de execucao.
-     * @param method metodo utilizado.
+     * @param method      metodo utilizado.
      * @throws IOException lanca excecao caso o caminho para armazenar o grafo nao seja encontrado.
      */
     private static void generateLog(Graph graph, long elapsedTime, String method) throws IOException {
@@ -298,11 +298,11 @@ public class GraphUtil {
 
         for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++)
             if (!visited[i])
-                findAllBridgesTarjan(graph.getVertices().get(i), parent, time, visited, disc, low);
+                findAllBridgesTarjanIterative(graph.getVertices().get(i), parent, time, visited, disc, low);
     }
 
     /**
-     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade (DPS).
+     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade (DPS), com abordagem recursiva.
      * Referencias:
      * A note on finding the bridges of a graph.txt: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
      * Bridges in a graph.txt: https://www.geeksforgeeks.org/bridge-in-a-graph/
@@ -315,8 +315,7 @@ public class GraphUtil {
      * @param disc    array de tempo de descobrimento.
      * @param low     array de menor tempo em vertices adjacentes.
      */
-    private static void findAllBridgesTarjan(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
-//        todo: adaptar metodo para abordagem iterativa
+    private static void findAllBridgesTarjanRecursive(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
 
         visited[v.getId()] = true;
         disc[v.getId()] = low[v.getId()] = ++time;
@@ -326,13 +325,65 @@ public class GraphUtil {
 
             if (!visited[w.getId()]) {
                 parent[w.getId()] = v;
-                findAllBridgesTarjan(w, parent, time, visited, disc, low);
+                findAllBridgesTarjanRecursive(w, parent, time, visited, disc, low);
                 low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
 
                 if (low[w.getId()] > disc[v.getId()])
                     edge.setBridge(true);
             } else if (w != parent[v.getId()])
                 low[v.getId()] = Math.min(low[v.getId()], low[w.getId()]);
+        }
+    }
+
+    /**
+     * Encontra todas as pontes em um grafo utilizando o metodo de Tarjan (1974) em conjunto com busca em profundidade (DPS), com abordagem iterativa.
+     * Referencias:
+     * A note on finding the bridges of a graph.txt: https://www2.eecs.berkeley.edu/Pubs/TechRpts/1974/ERL-m-427.pdf
+     * Bridges in a graph.txt: https://www.geeksforgeeks.org/bridge-in-a-graph/
+     * Find Bridges in a graph.txt using Tarjan's Algorithm: https://gist.github.com/SuryaPratapK/2774cb957a27448b485609418e272f2b
+     *
+     * @param start   vertice inicial.
+     * @param parent  array de parentes.
+     * @param time    tempo de execucao.
+     * @param visited array de vertices visitados.
+     * @param disc    array de tempo de descobrimento.
+     * @param low     array de menor tempo em vertices adjacentes.
+     */
+    private static void findAllBridgesTarjanIterative(Vertex start, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+
+        Stack<Vertex> stack = new Stack<>();
+        stack.push(start);
+        visited[start.getId()] = true;
+
+        while (!stack.isEmpty()) {
+            Vertex v = stack.peek();
+            boolean allChildrenVisited = true;
+
+            for (Edge edge : v.getAdjEdges()) {
+                Vertex w = edge.other(v);
+
+                if (!visited[w.getId()]) {
+                    stack.push(w);
+                    visited[w.getId()] = true;
+                    parent[w.getId()] = v;
+                    disc[w.getId()] = low[w.getId()] = ++time;
+                    allChildrenVisited = false;
+                    break;
+                } else if (w != parent[v.getId()]) {
+                    low[v.getId()] = Math.min(low[v.getId()], disc[w.getId()]);
+                    if (disc[w.getId()] < disc[v.getId()]) {
+                        edge.setBridge(true);
+                    }
+                }
+            }
+
+            if (allChildrenVisited) {
+                stack.pop();
+                if (!stack.isEmpty()) {
+                    Vertex u = stack.peek();
+                    low[u.getId()] = Math.min(low[u.getId()], low[v.getId()]);
+                }
+            }
         }
     }
 

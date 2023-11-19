@@ -16,9 +16,8 @@ public class Main {
           - GraphGenerator.nonEulerian(100000)
          */
 
-        Graph graph = GraphGenerator.bridgeConnected(5000);
+        Graph graph = GraphGenerator.bridgeConnected(1000000);
         GraphUtil.saveAsTxt(graph);
-//        GraphUtil.findBridges(graph);
         GraphUtil.fleuryNaive(graph, false);
         GraphUtil.fleuryTarjan(graph,false);
 

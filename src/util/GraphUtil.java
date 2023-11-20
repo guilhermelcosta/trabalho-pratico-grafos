@@ -243,8 +243,8 @@ public class GraphUtil {
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
 //                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
-//                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
-//                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
+//                Como as arestas de ponte sao previamente classificadas pelo metodo 'GraphUtil.findBridges(graph)', nesta versao do codigo
+//                apenas se verifica, a cada aresta adjacente ao vertice atual, aquela que nao seja classificada como arvore.
                 for (Edge edge : v.getAdjEdges()) {
                     if (!edge.isBridge()) {
                         graphAux.removeEdge(edge);

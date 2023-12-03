@@ -90,7 +90,7 @@ public class GraphUtil {
 
     /**
      * Implementacao do metodo de Fleury utilizando abordagem naive para identificacao de pontes.
-     * O metodo de Fleury foi adaptado a partir do algoritmo disponibilizado pelo prof. Zenilton no material da disciplina.
+     * O metodo de Fleury
      *
      * @param graph grafo de referencia.
      * @return booleano indicando se existe ou nao um ciclo euleriano.
@@ -110,7 +110,7 @@ public class GraphUtil {
         List<Integer> visited = new ArrayList<>();
         Graph graphAux = Graph.copy(graph);
         Vertex v = graphAux.getVertices().get(0);
-//        Seleciona vertice inicial com grau impar, se tiver. Caso contrario, inicia do primeiro vertice.
+
         for (Vertex vertex : graphAux.getVertices()) {
             if (vertex.getDegree() % 2 != 0) {
                 v = vertex;
@@ -121,9 +121,7 @@ public class GraphUtil {
 
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
-//                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
-//                Como os valores de vertices e edges sao passados por referencia, foi criado um novo grafo temporario 'graphTemp',
-//                de modo que as alteracoes realizadas nele nao alterem, necessariamente, o grafo auxiliar 'graphAux'.
+
                 for (Edge edge : v.getAdjEdges()) {
                     Graph graphTemp = Graph.copy(graphAux);
                     Edge currentEdge = graphTemp.getEdges()
@@ -131,16 +129,13 @@ public class GraphUtil {
                             .filter(e -> (e.getV().getId() == edge.getV().getId() && e.getW().getId() == edge.getW().getId()))
                             .findFirst()
                             .orElse(null);
+
                     graphTemp.removeEdge(Objects.requireNonNull(currentEdge));
                     graphTemp.setVertices(graphTemp.getVertices()
                             .stream()
                             .filter(vertex -> vertex.getDegree() > 0)
                             .toList());
-//                    Verifica se aresta removida e ou nao uma ponte pelo metodo naive. Caso o grafo, apos a remocao da aresta,
-//                    nao seja mais conexo (GraphUtil.isConnected() == false), entao a aresta e uma ponte.
-//                    Para essa abordagem, deve-se considerar apenas as arestas com grau > 0. Isso e necessario, pois
-//                    caso o grafo ja esteja desconexo (possua arestas com grau = 0), nenhuma aresta mais seria considerada ponte.
-//                    Por isso foi utilizado o graphTemp.setVertices() acima para manter apenas os vertices que ainda podem ser explorados (grau > 0).
+
                     if (GraphUtil.isConnected(graphTemp)) {
                         graphAux.removeEdge(edge);
                         v = edge.other(v);
@@ -149,8 +144,6 @@ public class GraphUtil {
                     }
                 }
             } else {
-//                Caso o vertice analisado nao tenha nenhuma aresta, que nao uma ponte,
-//                entao e removida a aresta de ponte.
                 Edge edge = v.getAdjEdges().get(0);
                 v = edge.other(v);
                 visited.add(v.getId());
@@ -160,7 +153,6 @@ public class GraphUtil {
         if (showPath)
             System.out.println(Arrays.toString(visited.toArray()));
 
-//        Informacoes para gerar log.
         if (Objects.equals(visited.get(0), visited.get(visited.size() - 1))) {
             graph.setHasEulerianCycle(true);
         } else
@@ -231,7 +223,7 @@ public class GraphUtil {
         List<Integer> visited = new ArrayList<>();
         Graph graphAux = Graph.copy(graph);
         Vertex v = graphAux.getVertices().get(0);
-//        Seleciona vertice inicial com grau impar, se tiver. Caso contrario, inicia do primeiro vertice.
+
         for (Vertex vertex : graphAux.getVertices()) {
             if (vertex.getDegree() % 2 != 0) {
                 v = vertex;
@@ -242,9 +234,6 @@ public class GraphUtil {
 
         while (!graphAux.getEdges().isEmpty()) {
             if (v.getDegree() > 1) {
-//                Procura, dentre as arestas adjacentes ao vertice atual, a primeira que nao e ponte.
-//                Como as arestas de ponte sao previamente classificadas pelo metodo 'GraphUtil.findBridges(graph)', nesta versao do codigo
-//                apenas se verifica, a cada aresta adjacente ao vertice atual, aquela que nao seja classificada como arvore.
                 for (Edge edge : v.getAdjEdges()) {
                     if (!edge.isBridge()) {
                         graphAux.removeEdge(edge);
@@ -254,8 +243,6 @@ public class GraphUtil {
                     }
                 }
             } else {
-//                Caso o vertice analisado nao tenha nenhuma aresta, que nao uma ponte,
-//                entao e removida a aresta de ponte.
                 Edge edge = v.getAdjEdges().get(0);
                 v = edge.other(v);
                 visited.add(v.getId());
@@ -265,7 +252,6 @@ public class GraphUtil {
         if (showPath)
             System.out.println(Arrays.toString(visited.toArray()));
 
-//        Informacoes para gerar log.
         if (Objects.equals(visited.get(0), visited.get(visited.size() - 1))) {
             graph.setHasEulerianCycle(true);
         } else
@@ -289,8 +275,6 @@ public class GraphUtil {
         boolean[] visited = new boolean[numberOfVertices];
         Vertex[] parent = new Vertex[numberOfVertices];
 
-//        O valor inicial de 'i' foi definido dessa forma para que grafo
-//        possa iniciar com vertice de id = 0 ou 1, sem problemas.
         for (int i = graph.getVertices().get(0).getId(); i < graph.getVertices().size(); i++) {
             parent[i] = null;
             visited[i] = false;
@@ -315,7 +299,8 @@ public class GraphUtil {
      * @param disc    array de tempo de descobrimento.
      * @param low     array de menor tempo em vertices adjacentes.
      */
-    private static void findAllBridgesTarjanRecursive(Vertex v, Vertex[] parent, int time, boolean[] visited, int[] disc, int[] low) {
+    private static void  findAllBridgesTarjanRecursive(Vertex v, Vertex[] parent, int time, boolean[] visited,
+                                                       int[] disc, int[] low) {
 
         visited[v.getId()] = true;
         disc[v.getId()] = low[v.getId()] = ++time;

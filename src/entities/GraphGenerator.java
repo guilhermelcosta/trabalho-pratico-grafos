@@ -42,8 +42,6 @@ public class GraphGenerator {
     public static Graph semiEulerian(int n) {
 
         Graph graph = GraphGenerator.eulerian(n);
-//        Caso o grafo possua mais de 3 vertices, insere uma nova aresta, de modo que 2 vertices
-//        tenham grau impar. Caso possua 3 vertices, remove uma aresta.
         if (n > 3) {
             List<Vertex> vertices = graph.getVertices();
             Vertex midVertex = vertices.get(graph.getVertices().size() / 2);
